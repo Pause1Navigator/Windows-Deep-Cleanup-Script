@@ -1,0 +1,39 @@
+How to Use the DeepCleanup.ps1 or DeepCleanup - With shutdown choice.ps1 Scripts
+Open PowerShell as Administrator:
+
+Right-click on the Start menu (or press Win + X).
+Select Windows PowerShell (Admin) from the menu.
+Navigate to the Script Location:
+
+Use the cd command to change the directory to where your script is located. For example:
+cd C:\Path\To\Your\Script
+Copy the Script Name:
+
+In your file explorer, locate the DeepCleanup.ps1 script.
+Right-click on the script name and select Copy.
+Paste and Run the Script in PowerShell:
+
+Go back to your PowerShell window.
+Right-click in the PowerShell window to paste the script name.
+Press Enter to run the script.
+That's it! Your DeepCleanup.ps1 script should now be running. If you encounter any issues, feel free to reach out for help.
+
+  How to Use the DeepCleanup.ps1 Script (Alternative Method)
+Open PowerShell as Administrator:
+
+Right-click on the Start menu (or press Win + X).
+Select Windows PowerShell (Admin) from the menu.
+Open the Script in a Text Editor:
+
+Locate the DeepCleanup.ps1 script in your file explorer.
+Right-click on the script and select Open with > Notepad (or your preferred text editor).
+Copy the Script Content:
+
+In the text editor, select all the text (you can use Ctrl + A).
+Copy the selected text (you can use Ctrl + C).
+Paste and Run the Script in PowerShell:
+
+Go back to your PowerShell window.
+Right-click in the PowerShell window to paste the copied script content.
+Press Enter to run the script.
+And you're done! This method is straightforward and ensures the script runs directly in your PowerShell session. If you have any questions or run into issues, feel free to ask for help.
