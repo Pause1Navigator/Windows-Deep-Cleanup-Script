@@ -1,0 +1,62 @@
+Windows Deep Cleanup Scripts
+1. DeepCleanup.ps1
+Description: This script performs a comprehensive cleanup of your Windows system and automatically shuts down the system after 90 seconds to finalize the cleanup process. It includes tasks such as clearing temporary files, cache, prefetch, Windows Update cache, and more. Additionally, it performs a deep registry cleaning to remove unnecessary entries and optimize system performance.
+
+Features:
+
+Clears temporary files and folders
+Cleans Windows Update cache
+Empties Recycle Bin
+Deletes old system restore points
+Removes Windows Error Reporting files
+Clears Windows Event Logs
+Cleans browser caches (Microsoft Edge and Google Chrome)
+Clears Windows Defender cache
+Flushes DNS cache
+Clears Windows Thumbnail, Font, and Icon caches
+Performs a deep registry cleaning
+Includes a basic memory cleaning step
+Automatically shuts down the system after 90 seconds
+Usage:
+
+Download the script file DeepCleanup.ps1.
+Open PowerShell as Administrator.
+Run the script by typing:
+.\DeepCleanup.ps1
+Note: The system will automatically shut down 90 seconds after the cleanup process is completed. No user intervention is required.
+
+2. DeepCleanup - With Shutdown Choice.ps1
+Description: This script performs the same comprehensive cleanup of your Windows system as the DeepCleanup.ps1 script. However, it offers a choice to the user at the end of the cleanup process to either shut down the system or cancel the shutdown.
+
+Features:
+
+Clears temporary files and folders
+Cleans Windows Update cache
+Empties Recycle Bin
+Deletes old system restore points
+Removes Windows Error Reporting files
+Clears Windows Event Logs
+Cleans browser caches (Microsoft Edge and Google Chrome)
+Clears Windows Defender cache
+Flushes DNS cache
+Clears Windows Thumbnail, Font, and Icon caches
+Performs a deep registry cleaning
+Includes a basic memory cleaning step
+Offers a choice to shut down the system or cancel the shutdown
+Usage:
+
+Download the script file DeepCleanup - With Shutdown Choice.ps1.
+Open PowerShell as Administrator.
+Run the script by typing:
+.\DeepCleanup - With Shutdown Choice.ps1
+Note: At the end of the cleanup process, a message box will appear offering two options:
+
+Yes: Proceed with the shutdown.
+No: Cancel the shutdown.
+Author:
+Pause_Navigator
+Email: pausenavigator@gmail.com
+With the help and assistance of: Copilot
+URL: https://copilot.microsoft.com
+Disclaimer:
+RUN AT YOUR OWN RISK. DO NOT EDIT AND DO NOT CHANGE ANYTHING TO THESE SCRIPTS.
