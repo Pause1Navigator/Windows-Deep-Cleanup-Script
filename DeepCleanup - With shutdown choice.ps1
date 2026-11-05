@@ -1,4 +1,4 @@
-# Enhanced Windows Deep Cleanup Script (Run as Administrator)
+﻿# Enhanced Windows Deep Cleanup Script (Run as Administrator)
 # Built by: Pause_Navigator
 # Email: pausenavigator@gmail.com
 # With the help and assistance of: Copilot
@@ -188,7 +188,8 @@ $DeletedKeysCount = 0
 $DeletedValuesCount = 0
 
 # --- Function to Delete Registry Key/Value and Handle Errors ---
-function Delete-RegistryItemSafe {
+function Remove-RegistryItemSafe {
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions', '', Justification = 'Internal helper; deletion is the purpose of the script, which is the confirmation point.')]
     param (
         [string]$Path,
         [string]$Name = $null
@@ -197,15 +198,15 @@ function Delete-RegistryItemSafe {
         if ($Name) {
             Remove-ItemProperty -Path $Path -Name $Name -Force -ErrorAction Stop
             Write-Host "Deleted Value: $($Path)\$($Name)" -ForegroundColor Green
-            $global:DeletedValuesCount++
+            $script:DeletedValuesCount++
         } else {
             Remove-Item -Path $Path -Recurse -Force -ErrorAction Stop
             Write-Host "Deleted Key: $($Path)" -ForegroundColor Green
-            $global:DeletedKeysCount++
+            $script:DeletedKeysCount++
         }
     } catch {
         Write-Warning "Error deleting $($Path)\$($Name): $($_.Exception.Message)"
-        $global:ErrorCount++
+        $script:ErrorCount++
     }
 }
 
@@ -214,49 +215,30 @@ Write-Host "--- Cleaning Recent Files and Programs ---"
 $RecentFiles = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs"
 $RunMRU = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU"
 $TypedURLs = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\TypedURLs"
-$UninstallKeys = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall", "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall"
 
 #RecentDocs
-Get-ChildItem -Path $RecentFiles | ForEach-Object { Delete-RegistryItemSafe -Path $_.PSPath }
+Get-ChildItem -Path $RecentFiles | ForEach-Object { Remove-RegistryItemSafe -Path $_.PSPath }
 
 #RunMRU
-Get-ChildItem -Path $RunMRU | ForEach-Object { Delete-RegistryItemSafe -Path $_.PSPath }
+Get-ChildItem -Path $RunMRU | ForEach-Object { Remove-RegistryItemSafe -Path $_.PSPath }
 
 #TypedURLs
 if (Test-Path $TypedURLs) {
-    Get-ChildItem -Path $TypedURLs | ForEach-Object { Delete-RegistryItemSafe -Path $_.PSPath }
+    Get-ChildItem -Path $TypedURLs | ForEach-Object { Remove-RegistryItemSafe -Path $_.PSPath }
 } else {
     Write-Host "Path $TypedURLs does not exist."
 }
 
-#Uninstall Keys (Orphaned Entries)
-foreach ($UninstallKey in $UninstallKeys) {
-    Get-ChildItem -Path $UninstallKey | ForEach-Object {
-        $DisplayName = Get-ItemProperty -Path $_.PSPath -Name DisplayName -ErrorAction SilentlyContinue
-        if (-not $DisplayName) {
-            Delete-RegistryItemSafe -Path $_.PSPath
-        }
-    }
-}
-
 # --- Cleaning Internet Explorer/Edge History and Cache ---
 Write-Host "--- Cleaning Internet Explorer/Edge History and Cache ---"
-$IEDownloadPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders"
-Delete-RegistryItemSafe -Path "HKCU:\Software\Microsoft\Internet Explorer\TypedURLs"
-Delete-RegistryItemSafe -Path "HKCU:\Software\Microsoft\Internet Explorer\LowRegistry\IEContentService\Cache"
-Delete-RegistryItemSafe -Path "HKCU:\Software\Microsoft\Edge\BLBeacon" #Edge Telemetry.
-
-# --- Cleaning System Leftovers ---
-Write-Host "--- Cleaning System Leftovers ---"
-Delete-RegistryItemSafe -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths"
-Delete-RegistryItemSafe -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers"
-Delete-RegistryItemSafe -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\PendingFileRenameOperations"
-Delete-RegistryItemSafe -Path "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\App Paths" #For 64bit systems
+Remove-RegistryItemSafe -Path "HKCU:\Software\Microsoft\Internet Explorer\TypedURLs"
+Remove-RegistryItemSafe -Path "HKCU:\Software\Microsoft\Internet Explorer\LowRegistry\IEContentService\Cache"
+Remove-RegistryItemSafe -Path "HKCU:\Software\Microsoft\Edge\BLBeacon" #Edge Telemetry.
 
 # --- Cleaning Windows Error Reporting ---
 Write-Host "--- Cleaning Windows Error Reporting ---"
-Delete-RegistryItemSafe -Path "HKCU:\Software\Microsoft\Windows\Windows Error Reporting\UserQueuedReports"
-Delete-RegistryItemSafe -Path "HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps"
+Remove-RegistryItemSafe -Path "HKCU:\Software\Microsoft\Windows\Windows Error Reporting\UserQueuedReports"
+Remove-RegistryItemSafe -Path "HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps"
 
 # --- Summary ---
 Write-Host "--- Summary ---"
