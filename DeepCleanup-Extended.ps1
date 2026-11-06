@@ -76,9 +76,9 @@ try {
 # Clear Temp folders
 try {
     if (-not $DryRun) {
-        Get-ChildItem -Path "$env:TEMP\*" -Recurse -Force -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
-        Get-ChildItem -Path "C:\Windows\Temp\*" -Recurse -Force -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
-        Get-ChildItem -Path "C:\Windows\SoftwareDistribution\Download\*" -Recurse -Force -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+        Remove-Item -Path "$env:TEMP\*" -Recurse -Force -ErrorAction SilentlyContinue
+        Remove-Item -Path "C:\Windows\Temp\*" -Recurse -Force -ErrorAction SilentlyContinue
+        Remove-Item -Path "C:\Windows\SoftwareDistribution\Download\*" -Recurse -Force -ErrorAction SilentlyContinue
         Write-Host "Temporary files cleared."
     } else {
         Write-Host "[Dry-Run] Would clear Temp folders:" -ForegroundColor Cyan
@@ -95,7 +95,7 @@ try {
     if (-not $DryRun) {
         Stop-Service -Name SysMain -ErrorAction SilentlyContinue
         Start-Sleep -Seconds 5
-        Get-ChildItem -Path "C:\Windows\Prefetch\*" -Recurse -Force -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+        Remove-Item -Path "C:\Windows\Prefetch\*" -Recurse -Force -ErrorAction SilentlyContinue
         Start-Service -Name SysMain -ErrorAction SilentlyContinue
         Write-Host "Prefetch cleared."
     } else {
@@ -216,7 +216,7 @@ try {
     $FirefoxProfilesPath = "$env:LOCALAPPDATA\Mozilla\Firefox\Profiles"
     if (Test-Path $FirefoxProfilesPath) {
         if (-not $DryRun) {
-            Get-ChildItem -Path "$FirefoxProfilesPath\*\cache2\*" -Recurse -Force -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+            Remove-Item -Path "$FirefoxProfilesPath\*\cache2\*" -Recurse -Force -ErrorAction SilentlyContinue
             Write-Host "Mozilla Firefox cache cleared."
         } else {
             Write-Host "[Dry-Run] Would clear Mozilla Firefox cache files." -ForegroundColor Cyan

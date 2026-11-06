@@ -46,9 +46,9 @@ try {
 
 # Clear Temp folders
 try {
-    Get-ChildItem -Path "$env:TEMP\*" -Recurse -Force -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
-    Get-ChildItem -Path "C:\Windows\Temp\*" -Recurse -Force -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
-    Get-ChildItem -Path "C:\Windows\SoftwareDistribution\Download\*" -Recurse -Force -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+    Remove-Item -Path "$env:TEMP\*" -Recurse -Force -ErrorAction SilentlyContinue
+    Remove-Item -Path "C:\Windows\Temp\*" -Recurse -Force -ErrorAction SilentlyContinue
+    Remove-Item -Path "C:\Windows\SoftwareDistribution\Download\*" -Recurse -Force -ErrorAction SilentlyContinue
     Write-Host "Temporary files cleared."
 } catch {
     Write-Warning "Error clearing temporary files: $($_.Exception.Message)"
@@ -58,7 +58,7 @@ try {
 try {
     Stop-Service -Name SysMain -ErrorAction SilentlyContinue
     Start-Sleep -Seconds 5
-    Get-ChildItem -Path "C:\Windows\Prefetch\*" -Recurse -Force -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+    Remove-Item -Path "C:\Windows\Prefetch\*" -Recurse -Force -ErrorAction SilentlyContinue
     Start-Service -Name SysMain -ErrorAction SilentlyContinue
     Write-Host "Prefetch cleared."
 } catch {
